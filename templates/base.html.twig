@@ -7,6 +7,8 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <script src="https://kit.fontawesome.com/351e9300a0.js" crossorigin="anonymous"></script>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {% endblock %}
 
         {% block javascripts %}
@@ -14,6 +16,29 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div id="alert" class='alert alert-{{ type }}'>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            <header class="flexCenter flexRow">
+                <div class="menuLeft">
+                    <a href="{{ path("home") }}" class="titleBlog">CookTime</a>
+                </div>
+                <div class="menuRight">
+                    {% if app.user %}
+                        <a href="/user/"><i class="fa-solid fa-circle-user"></i>{% trans %}My profile{% endtrans %}</a>
+                        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>{% trans %}Disconnection{% endtrans %}</a>
+                    {% else %}
+                        <a href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>{% trans %}Connection{% endtrans %}</a>
+                        <a href="/register"><i class="fa-solid fa-user-plus"></i>{% trans %}Register{% endtrans %}</a>
+                    {% endif %}
+                </div>
+            </header>
+        {% endblock %}
     </body>
 </html>

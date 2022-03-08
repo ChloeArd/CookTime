@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Add a article{% endtrans %}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <main>
+        <h1 class="center title">{% trans %}Add a article{% endtrans %}</h1>
+
+        <div class="container-fluid mt-4 w-50">
+            {% form_theme form 'bootstrap_5_layout.html.twig' %}
+            {{ form_start(form) }}
+            <div class="flexColumn">
+                {{ form_row(form.title) }}
+            </div>
+            <div class="flexColumn">
+                {{ form_row(form.picture) }}
+            </div>
+            <div class="flexColumn">
+                {{ form_row(form.time) }}
+            </div>
+            <div class="flexColumn">
+                {{ form_row(form.level) }}
+            </div>
+            <div class="flexColumn">
+                {{ form_row(form.preparation) }}
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="{% trans %}Save{% endtrans %}" name="submit" class="btn-primary btn">
+            </div>
+            {{ form_widget(form._token) }}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token("article-add") }}">
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </main>
+
+{% endblock %}
