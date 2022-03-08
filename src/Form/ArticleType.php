@@ -24,10 +24,12 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', TextType::class, ['label' => 'Title of article'])
             ->add('picture', FileType::class, ['label' => 'Upload a photo of the dish'])
-            ->add('time', TimeType::class, ['label' => 'Preparation + cooking time', 'input' => 'timestamp', 'widget' => "choice"])
+            ->add('time', TimeType::class, [
+                'label' => 'Preparation + cooking time',
+                'widget' => 'single_text',
+            ])
             ->add('level', TextType::class, ['label' => 'The level'])
-            ->add('preparation', CKEditorType::class,
-            [
+            ->add('preparation', CKEditorType::class, [
                 'label' => 'Preparing the recipe',
                 'constraints' => [
                     new Length([
@@ -38,7 +40,7 @@ class ArticleType extends AbstractType
                     ])
                 ]
             ])
-            ->add('date', DateTimeType::class, ['data' => $dateTime])
+            ->add('date', DateTimeType::class, ['empty_data' => $dateTime->format('d/m/Y H:i:s'), 'widget' => 'single_text'])
             ->add('user', EntityType::class, ['class' => User::class, "choice_label" => "email" ])
             ->add('submit', SubmitType::class, ["label" => "Save"] )
         ;

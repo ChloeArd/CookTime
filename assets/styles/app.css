@@ -7,7 +7,6 @@
 }
 
 html {
-    font-size: 62.5%;
     font-family: 'Fredoka', sans-serif;
 }
 
@@ -96,6 +95,7 @@ main {
     background-color: white;
     margin-top: 20px;
     border-radius: 20px;
+    padding-bottom: 15px;
 }
 
 .title {
@@ -131,7 +131,7 @@ label, input, textarea, button {
     margin: 10px 0;
 }
 
-button {
+button, .btn {
     color: white;
     background-color: #e19159;
     border-radius: 10px;
@@ -141,17 +141,47 @@ button {
     padding: 5px;
 }
 
-input, textarea {
+input, textarea, select {
+    width: 100%;
     padding: 5px;
     font-size: 15px;
     border: 1px solid #e19159;
 }
 
-button:hover {
+button:hover, .btn:hover {
     background-color: #e57323;
 }
 
 .alert-danger, form > div > ul > li{
     font-size: 15px;
     color: red;
+}
+
+.alert-success {
+    background-color: #6cbd6c;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    width: 100%;
+    font-size: 20px;
+}
+
+.m-2 {
+    margin: 20px;
+}
+
+.articles {
+    border: 1px solid grey;
+    border-radius: 15px;
+    margin: 15px auto;
+    padding: 15px;
+    width: 90%;
+}
+
+.w-2 {
+    width: 20%;
+}
+
+.w-8 {
+    width: 80%;
 }
