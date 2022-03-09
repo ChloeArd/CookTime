@@ -307,4 +307,27 @@ button:hover, .btn:hover {
     .btn {
         width: 100%;
     }
+
+    .titleBlog {
+        font-size: 30px;
+    }
+
+    .menuRight > a {
+        font-size: 15px;
+        padding: 0;
+        color: white;
+        background-color: transparent;
+        margin: 0 5px;
+        border: 0;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .resp-none {
+        display: none;
+    }
+
+    .menuRight > a {
+        font-size: 25px;
+    }
 }

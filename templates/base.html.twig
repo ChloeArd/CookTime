@@ -33,14 +33,14 @@
                     {% if app.user %}
                         {% for role in app.user.roles %}
                             {% if role == "ROLE_ADMIN" %}
-                                <a href="/admin"><i class="fa-solid fa-chalkboard-user"></i>{% trans %}Panel admin{% endtrans %}</a>
+                                <a href="/admin"><i class="fa-solid fa-chalkboard-user"></i><span class="resp-none">{% trans %}Panel admin{% endtrans %}</span></a>
                             {% endif %}
                         {% endfor %}
-                        <a href="/account"><i class="fa-solid fa-circle-user"></i>{% trans %}My profile{% endtrans %}</a>
-                        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>{% trans %}Disconnection{% endtrans %}</a>
+                        <a href="/account"><i class="fa-solid fa-circle-user"></i><span class="resp-none">{% trans %}My profile{% endtrans %}</span></a>
+                        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i><span class="resp-none">{% trans %}Disconnection{% endtrans %}</span></a>
                     {% else %}
-                        <a href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>{% trans %}Connection{% endtrans %}</a>
-                        <a href="/register"><i class="fa-solid fa-user-plus"></i>{% trans %}Register{% endtrans %}</a>
+                        <a href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i><span class="resp-none">{% trans %}Connection{% endtrans %}</span></a>
+                        <a href="/register"><i class="fa-solid fa-user-plus"></i><span class="resp-none">{% trans %}Register{% endtrans %}</span></a>
                     {% endif %}
                 </div>
             </header>
