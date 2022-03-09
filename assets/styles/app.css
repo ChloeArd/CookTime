@@ -96,6 +96,7 @@ main {
     margin-top: 20px;
     border-radius: 20px;
     padding-bottom: 15px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
 }
 
 .title {
@@ -138,7 +139,8 @@ button, .btn {
     width: 20%;
     margin: auto;
     border: none;
-    padding: 5px;
+    padding: 8px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
 input, textarea, select {
@@ -150,6 +152,7 @@ input, textarea, select {
 
 button:hover, .btn:hover {
     background-color: #e57323;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 .alert-danger, form > div > ul > li{
@@ -178,10 +181,88 @@ button:hover, .btn:hover {
     width: 90%;
 }
 
+
+.articles:hover {
+    background-color: rgba(225, 145, 89, 0.67);
+    border: 1px solid rgba(225, 145, 89, 0.67);
+}
 .w-2 {
     width: 20%;
 }
 
 .w-8 {
     width: 80%;
+}
+
+.imageArticle {
+    width: 70%;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.imageArticles {
+    width: 80%;
+}
+
+.time {
+    font-size: 25px;
+    margin: 25px;
+}
+
+.c-orange {
+    color: #e19159;
+}
+
+.titlePreparation {
+    color: #e19159;
+    padding: 30px;
+    margin: 40px 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+}
+
+.preparation {
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #bdbcbc;
+    border-radius: 15px;
+}
+
+.lineHorizontal {
+    border-bottom: 1px solid #bdbcbc;
+    width: 70%;
+    margin: 40px auto;
+}
+
+.c-grey {
+    color: #AAAAAA;
+}
+
+.date {
+    font-size: 13px;
+    margin: 10px 0;
+}
+
+.comment {
+    border: 1px solid #e19159;
+    border-radius: 15px;
+    padding: 10px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.comment:hover {
+    background-color: rgba(225, 145, 89, 0.67);
+    border: 1px solid rgba(225, 145, 89, 0.67);
+}
+
+.titleArticle {
+    margin-bottom: 15px;
+}
+
+.btnHover {
+    margin: 0 10px;
+}
+
+.btnHover:hover {
+    color: #e19159;
 }

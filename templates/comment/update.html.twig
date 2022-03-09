@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Update a comment{% endtrans %}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <main>
+        <h1 class="center title">{% trans %}Update a comment{% endtrans %}</h1>
+
+        <div class="container-fluid mt-4 w-50">
+            {{ form_start(form, { 'attr': {'class': 'flexColumn'}}) }}
+                {{ form_row(form.comment) }}
+            <div class="mb-3">
+                <input type="submit" value="{% trans %}Save{% endtrans %}" name="submit" class="btn-primary btn">
+            </div>
+            {{ form_widget(form._token) }}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token("comment-add") }}">
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
+    </main>
+
+{% endblock %}

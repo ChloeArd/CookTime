@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -50,6 +51,7 @@ class ArticleController extends AbstractController
         if ($this->isCsrfTokenValid("article-add", $submittedToken)) {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($article);
+                date_default_timezone_set('Europe/Paris');
                 $datetime = new \DateTime();
                 $article->setDate($datetime);
                 // Retrieve logged in user ID
@@ -72,10 +74,11 @@ class ArticleController extends AbstractController
      * @return Response
      */
     #[Route('/article/{idArticle}', name: 'article_one')]
-    public function oneArticle(int $idArticle, ArticleRepository $repository): Response
+    public function oneArticle(int $idArticle, ArticleRepository $repository, CommentRepository $commentRepository): Response
     {
         $article = $repository->find($idArticle);
-        return $this->render('article/one.html.twig', ["article" => $article]);
+        $comments = $commentRepository->findBy(['article' => $article->getId()]);
+        return $this->render('article/one.html.twig', ["article" => $article, "comments" => $comments]);
     }
 
     /**

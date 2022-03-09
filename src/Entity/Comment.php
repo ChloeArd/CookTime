@@ -16,14 +16,15 @@ class Comment
     #[ORM\Column(type: 'text')]
     private $comment;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $date;
 
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
     private $article;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     private $user;
+
 
     public function getId(): ?int
     {
@@ -42,12 +43,12 @@ class Comment
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 

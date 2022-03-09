@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+{% block body %}
+    {{ parent() }}
+
+    <main>
+        <h1 class="center title">{{ article.title |title }}</h1>
+
+        <div class="flexCenter">
+            <img class="imageArticle" src="{{ article.picture }}">
+        </div>
+
+        <div class="flexRow flexCenter">
+            <p class="time"><i class="fa-solid fa-clock c-orange"></i>{{ article.time |date("H:i")}}</p>
+            <p class="time"><i class="fa-solid fa-utensils c-orange"></i>{{ article.level }}</p>
+        </div>
+
+        <h2 class="center titlePreparation">{% trans %}Preparation{% endtrans %}</h2>
+
+        <div class="preparation">
+            {{ article.preparation }}
+        </div>
+
+        <div class="lineHorizontal"></div>
+
+        <h2 class="center titlePreparation">{% trans %}Comments{% endtrans %}</h2>
+
+        {% if app.user %}
+            <div class="m-2">
+                <a class="btn" href="/comment/add/{{ article.id }}">{% trans %}Add comment{% endtrans %}</a>
+            </div>
+        {% endif %}
+
+        {% for comment in comments %}
+            <div class="comment flexColumn">
+                <p class="c-grey date">{{ comment.date |date("d/m/Y H:i") }}</p>
+                <p>{{ comment.comment }}</p>
+            </div>
+
+            {% if app.user %}
+                {% for role in app.user.roles %}
+                    {% if role == "ROLE_MODERATOR" %}
+                        <div class="flexCenter">
+                            <a class="btnHover" href="/comment/update/{{ comment.id }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="btnHover" href="/comment/delete/{{ comment.id }}"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+        {% endfor %}
+    </main>
+
+{% endblock %}

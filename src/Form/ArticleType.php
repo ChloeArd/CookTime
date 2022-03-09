@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
@@ -24,7 +25,7 @@ class ArticleType extends AbstractType
         $dateTime = new \DateTime();
         $builder
             ->add('title', TextType::class, ['label' => 'Title of article'])
-            ->add('picture', FileType::class, ['label' => 'Upload a photo of the dish'])
+            ->add('picture', UrlType::class, ['label' => 'URL to photo of the dish'])
             ->add('time', TimeType::class, [
                 'label' => 'Preparation + cooking time',
                 'widget' => 'single_text',
