@@ -8,9 +8,16 @@
     <main>
         <h1 class="center title">{% trans %}The recipes{% endtrans %}</h1>
 
-        <div class="m-2">
-            <a class="btn" href="/article/add">{% trans %}Add article{% endtrans %}</a>
-        </div>
+        {% if app.user %}
+            {% for role in app.user.roles %}
+                {% if role == "ROLE_AUTHOR" %}
+                    <div class="m-2">
+                        <a class="btn" href="/article/add">{% trans %}Add article{% endtrans %}</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
 
         {% for article in articles %}
         <div class="articles flexRow">

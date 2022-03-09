@@ -18,6 +18,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[IsGranted('IS_AUTHENTICATED_FULLY')]
 class CommentController extends AbstractController
 {
+    /** Add a comment
+     * @param Article $article
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @param UserRepository $repository
+     * @return Response
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     #[Route('/comment/add/{id}', name: 'app_comment')]
     public function add(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UserRepository $repository): Response
     {
@@ -50,6 +60,14 @@ class CommentController extends AbstractController
         return $this->render('comment/add.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * Update a comment
+     * @param Comment $comment
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
     #[Route('/comment/update/{id}', name: 'comment_update')]
     #[isGranted('ROLE_MODERATOR')]
     public function update(Comment $comment, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
@@ -59,6 +77,7 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
             $message = $translator->trans('Comment modified successfully');
             $this->addFlash("success", $message);
             $id = $comment->getArticle()->getId();
@@ -67,11 +86,19 @@ class CommentController extends AbstractController
         return $this->render('comment/update.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * Delete a comment
+     * @param Comment $comment
+     * @param CommentRepository $repository
+     * @param TranslatorInterface $translator
+     * @return Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     #[Route('/comment/delete/{id}', name: 'comment_delete')]
     #[isGranted('ROLE_MODERATOR')]
     public function delete(Comment $comment, CommentRepository $repository, TranslatorInterface $translator): Response
     {
-        // faire que user ne soit pas supprimer et ni l'article
         $repository->remove($comment);
         $message = $translator->trans('Comment deleted successfully');
         $this->addFlash("success", $message);
