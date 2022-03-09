@@ -31,7 +31,12 @@
                 </div>
                 <div class="menuRight">
                     {% if app.user %}
-                        <a href="/user/"><i class="fa-solid fa-circle-user"></i>{% trans %}My profile{% endtrans %}</a>
+                        {% for role in app.user.roles %}
+                            {% if role == "ROLE_ADMIN" %}
+                                <a href="/admin"><i class="fa-solid fa-chalkboard-user"></i>{% trans %}Panel admin{% endtrans %}</a>
+                            {% endif %}
+                        {% endfor %}
+                        <a href="/user/{{ app.user.id }}"><i class="fa-solid fa-circle-user"></i>{% trans %}My profile{% endtrans %}</a>
                         <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>{% trans %}Disconnection{% endtrans %}</a>
                     {% else %}
                         <a href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i>{% trans %}Connection{% endtrans %}</a>

@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\IntegerType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -30,7 +31,16 @@ class ArticleType extends AbstractType
                 'label' => 'Preparation + cooking time',
                 'widget' => 'single_text',
             ])
-            ->add('level', TextType::class, ['label' => 'The level'])
+            ->add('level', ChoiceType::class, [
+                'label' => 'The level',
+                'choices'  => [
+                    'Très facile' => "Très facile",
+                    'Facile' => "Facile",
+                    'Moyen' => "Moyen",
+                    'Difficile' => "Difficile",
+                    'Très difficile' => "Très difficile",
+                ],
+                ])
             ->add('preparation', CKEditorType::class, [
                 'label' => 'Preparing the recipe',
                 'constraints' => [
