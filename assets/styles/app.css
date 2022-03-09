@@ -140,6 +140,7 @@ button, .btn {
     margin: auto;
     border: none;
     padding: 8px;
+    text-align: center;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -269,4 +270,10 @@ button:hover, .btn:hover {
 
 .d-none {
     display: none;
+}
+
+.info  {
+    background-color: #e5e2e2;
+    border-radius: 10px;
+    padding: 8px;
 }

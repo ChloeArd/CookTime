@@ -3,18 +3,26 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {{ parent() }}
+    <main>
+        <h1 class="center title">{% trans %}Hello {% endtrans %} !</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <div class="comment">
+            <div class="info">
+                <p><span class="c-grey">Email</span> : {{ app.user.email }}</p>
+            </div>
+            <div class="m-2 flexCenter">
+                <a class="btn" href="/user/update/{{ app.user.id }}">{% trans %}Update my account{% endtrans %}</a>
+            </div>
+            <div class="m-2 flexCenter">
+                <a class="btn" href="/reset-password">{% trans %}Reset my password{% endtrans %}</a>
+            </div>
+            <div class="m-2 flexCenter">
+                <a class="btn" href="/user/delete/{{ app.user.id }}">{% trans %}Delete my account{% endtrans %}</a>
+            </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/chloe/PhpstormProjects/CookTime/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/chloe/PhpstormProjects/CookTime/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+            <div>
+            </div>
+        </div>
+    </main>
 {% endblock %}
