@@ -46,9 +46,7 @@ class ArticleType extends AbstractType
                 'constraints' => [
                     new Length([
                         'min' => 40,
-                        'max' => 3000,
                         'minMessage' => 'The preparation is too short',
-                        'maxMessage' => 'The preparation is too long'
                     ])
                 ]
             ])

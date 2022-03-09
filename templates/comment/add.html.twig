@@ -11,7 +11,7 @@
         <div class="container-fluid mt-4 w-50">
             {{ form_start(form, { 'attr': {'class': 'flexColumn'}}) }}
                 {{ form_row(form.comment) }}
-            <div class="mb-3">
+            <div class="mb-3 flexCenter">
                 <input type="submit" value="{% trans %}Save{% endtrans %}" name="submit" class="btn-primary btn">
             </div>
             {{ form_widget(form._token) }}

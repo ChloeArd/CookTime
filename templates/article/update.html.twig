@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Add a article{% endtrans %}{% endblock %}
+{% block title %}{% trans %}Update a article{% endtrans %}{% endblock %}
 
 {% block body %}
     {{ parent() }}
 
     <main>
-        <h1 class="center title">{% trans %}Add a article{% endtrans %}</h1>
+        <h1 class="center title">{% trans %}Update a article{% endtrans %}</h1>
 
         <div class="container-fluid mt-4 w-50">
             {{ form_start(form, { 'attr': {'class': 'flexColumn'}}) }}
@@ -15,6 +15,11 @@
                 {{ form_row(form.time) }}
                 {{ form_row(form.level) }}
                 {{ form_row(form.preparation, { 'attr': {'class': 'flexColumn'}}) }}
+            <div class="d-none">
+                {{ form_row(form.user) }}
+                {{ form_row(form.date) }}
+
+            </div>
             <div class="mb-3 flexCenter">
                 <input type="submit" value="{% trans %}Save{% endtrans %}" name="submit" class="btn-primary btn">
             </div>
