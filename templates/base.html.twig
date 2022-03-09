@@ -41,7 +41,14 @@
                     {% else %}
                         <a href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i><span class="resp-none">{% trans %}Connection{% endtrans %}</span></a>
                         <a href="/register"><i class="fa-solid fa-user-plus"></i><span class="resp-none">{% trans %}Register{% endtrans %}</span></a>
+
                     {% endif %}
+                    {% for locale in locales %}
+                        {% if locale != app.request.locale %}
+                            <a href="{{ path('change_locale', {'locale': locale}) }}"><img class="flag" src="{{ asset('img/'~locale~'.png') }}" alt="{{ locale }}"></a>
+                        {% endif %}
+                    {% endfor %}
+
                 </div>
             </header>
         {% endblock %}

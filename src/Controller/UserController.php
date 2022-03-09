@@ -28,6 +28,14 @@ class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Update user
+     * @param User $user
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param TranslatorInterface $translator
+     * @return Response
+     */
     #[Route('/user/update/{id}', name: 'user_update')]
     public function update(User $user, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {

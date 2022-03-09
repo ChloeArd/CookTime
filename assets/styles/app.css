@@ -278,6 +278,10 @@ button:hover, .btn:hover {
     padding: 8px;
 }
 
+.flag {
+    width: 30px;
+}
+
 @media screen and (max-width: 800px) {
     .articles {
         display: flex;
