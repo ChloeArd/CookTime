@@ -278,6 +278,33 @@ button:hover, .btn:hover {
     padding: 8px;
 }
 
-@media screen and (max-width: px) {
-    /* contenu CSS */
+@media screen and (max-width: 800px) {
+    .articles {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .width_repsonsive {
+        padding: 10px;
+        width: 100%;
+    }
+
+    main {
+        width: 100%;
+        margin-top: 0;
+        box-shadow: none;
+    }
+
+    .title {
+        border-radius: 0;
+        margin: 0;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    .btn {
+        width: 100%;
+    }
 }

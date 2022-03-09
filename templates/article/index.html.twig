@@ -21,10 +21,10 @@
 
         {% for article in articles %}
         <div class="articles flexRow">
-            <div class="w-2 flexCenter">
+            <div class="w-2 flexCenter width_repsonsive">
                 <img class="imageArticles" src="{{ article.picture }}">
             </div>
-            <div class="flexColumn w-8">
+            <div class="flexColumn w-8 width_repsonsive">
                 <a class="titleArticle" href="article/{{ article.id }}"><h2>{{ article.title |title }} <span class="c-grey date">- {{ article.date |date("d/m/Y H:i") }}<span></span></h2></a>
                 <p><span class="c-grey">{% trans %}Time{% endtrans %} :</span> {{ article.time |date("H:i")}}</p>
                 <p><span class="c-grey">{% trans %}Level{% endtrans %} :</span> {{ article.level }}</p>
