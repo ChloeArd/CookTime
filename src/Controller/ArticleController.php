@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,19 +30,6 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * one article
-     * @param int $idArticle
-     * @param ArticleRepository $repository
-     * @return Response
-     */
-    #[Route('/article/{idArticle}', name: 'article_one')]
-    public function oneArticle(int $idArticle, ArticleRepository $repository): Response {
-
-        $article = $repository->find($idArticle);
-        return $this->render('article/one.html.twig', ["article" => $article]);
-    }
-
-    /**
      * add article
      * @param Request $request
      * @param EntityManagerInterface $entityManager
@@ -47,7 +37,8 @@ class ArticleController extends AbstractController
      * @return Response
      */
     #[Route('/article/add', name: 'article_add')]
-    public function add(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    #[IsGranted('ROLE_AUTHOR')]
+    public function add(Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UserRepository $repository): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -59,6 +50,12 @@ class ArticleController extends AbstractController
         if ($this->isCsrfTokenValid("article-add", $submittedToken)) {
             if ($form->isSubmitted() && $form->isValid()) {
                 $entityManager->persist($article);
+                $datetime = new \DateTime();
+                $article->setDate($datetime);
+                // Retrieve logged in user ID
+                $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
+                $userAuthenticated = $repository->find($idUser);
+                $article->setUser($userAuthenticated);
                 $entityManager->flush();
                 $message = $translator->trans('Article added successfully');
                 $this->addFlash("success", $message);
@@ -66,6 +63,19 @@ class ArticleController extends AbstractController
             }
         }
         return $this->render('article/add.html.twig', ['form' => $form->createView()]);
+    }
+
+    /**
+     * one article
+     * @param int $idArticle
+     * @param ArticleRepository $repository
+     * @return Response
+     */
+    #[Route('/article/{idArticle}', name: 'article_one')]
+    public function oneArticle(int $idArticle, ArticleRepository $repository): Response
+    {
+        $article = $repository->find($idArticle);
+        return $this->render('article/one.html.twig', ["article" => $article]);
     }
 
     /**
@@ -77,8 +87,8 @@ class ArticleController extends AbstractController
      * @return Response
      */
     #[Route('/article/update/{id}', name: 'article_update')]
-    public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response {
-
+    public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
@@ -103,8 +113,8 @@ class ArticleController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     #[Route('/article/delete/{id}', name: 'article_delete')]
-    public function delete(Article $article, EntityManagerInterface $entityManager, ArticleRepository $repository, TranslatorInterface $translator): Response {
-
+    public function delete(Article $article, ArticleRepository $repository, TranslatorInterface $translator): Response
+    {
         $repository->remove($article);
         $message = $translator->trans('Article deleted successfully');
         $this->addFlash("success", $message);

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\User;
+use Doctrine\DBAL\Types\IntegerType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -40,8 +41,8 @@ class ArticleType extends AbstractType
                     ])
                 ]
             ])
-            ->add('date', DateTimeType::class, ['empty_data' => $dateTime->format('d/m/Y H:i:s'), 'widget' => 'single_text'])
-            ->add('user', EntityType::class, ['class' => User::class, "choice_label" => "email" ])
+            ->add('date', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
+            ->add('user', EntityType::class, ['class' => User::class, "choice_label" => "id"])
             ->add('submit', SubmitType::class, ["label" => "Save"] )
         ;
     }

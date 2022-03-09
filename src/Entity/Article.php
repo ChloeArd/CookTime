@@ -30,7 +30,7 @@ class Article
     #[ORM\Column(type: 'text')]
     private $preparation;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
@@ -114,7 +114,7 @@ class Article
         return $this->date;
     }
 
-    public function setDate(\DateTime $date): self
+    public function setDate(?\DateTime $date): self
     {
         $this->date = $date;
 
