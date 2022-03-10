@@ -27,9 +27,7 @@ class ArticleType extends AbstractType
         $builder
             ->add('title', TextType::class, ['label' => 'Title of article'])
             ->add('picture', UrlType::class, [
-                'label' => 'URL to photo of the dish',
-                'help' => 'A valid URL always starts with https://',
-                'default_protocol' => "https://"
+                'label' => 'URL to photo of the dish'
             ])
             ->add('time', TimeType::class, [
                 'label' => 'Preparation + cooking time',
@@ -45,7 +43,13 @@ class ArticleType extends AbstractType
                     'Très difficile' => "Très difficile",
                 ],
                 ])
-            ->add('preparation', CKEditorType::class, ['label' => 'Preparing the recipe'])
+            ->add('preparation', CKEditorType::class, [
+                'label' => 'Preparing the recipe',
+                'config' => [
+                    'uiColor' => '#e19159',
+                    'height' => 500,
+                ],
+            ])
             ->add('date', DateTimeType::class, [
                 'widget' => 'single_text',
                 'required' => false,

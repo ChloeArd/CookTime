@@ -21,7 +21,7 @@ class Article
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Assert\Url(message: "The URL is not in the correct format", protocols: ['https', 'sftp'])]
+    #[Assert\Url(message: "The URL is not in the correct format")]
     private $picture;
 
     #[ORM\Column(type: 'time')]
@@ -38,11 +38,9 @@ class Article
     private $preparation;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Assert\NotBlank(message: "Date cannot be empty")]
     private $date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
-    #[Assert\NotBlank(message: "User cannot be empty")]
     private $user;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]

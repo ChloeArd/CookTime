@@ -19,15 +19,12 @@ class Comment
     private $comment;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    #[Assert\NotBlank(message: "Date cannot be empty")]
     private $date;
 
     #[ORM\ManyToOne(targetEntity: Article::class, inversedBy: 'comments')]
-    #[Assert\NotBlank(message: "Article cannot be empty")]
     private $article;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
-    #[Assert\NotBlank(message: "User cannot be empty")]
     private $user;
 
 

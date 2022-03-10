@@ -27,7 +27,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $email;
 
     #[ORM\Column(type: 'json')]
-    #[Assert\NotBlank(message: "Roles cannot be empty")]
     #[Assert\Json(message: "The JSON is not in the correct format")]
     private $roles = ["ROLE_USER"];
 
