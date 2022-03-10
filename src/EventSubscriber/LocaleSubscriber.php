@@ -8,12 +8,20 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
-    // Langue by default
+    // Language by default
     private $defaultLocale;
 
     public function __construct($defaultLocale = 'en')
     {
         $this->defaultLocale = $defaultLocale;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            // We must set a high priority
+            KernelEvents::REQUEST => [['onKernelRequest', 20]],
+        ];
     }
 
     public function onKernelRequest(RequestEvent $event)
@@ -23,20 +31,14 @@ class LocaleSubscriber implements EventSubscriberInterface
             return;
         }
 
-        // On vérifie si la langue est passée en paramètre de l'URL
+        // We check if the language is passed as a parameter of the URL
         if ($locale = $request->query->get('_locale')) {
             $request->setLocale($locale);
         } else {
-            // Sinon on utilise celle de la session
+            // Otherwise we use that of the session
             $request->setLocale($request->getSession()->get('_locale', $this->defaultLocale));
         }
     }
 
-    public static function getSubscribedEvents()
-    {
-        return [
-            // On doit définir une priorité élevée
-            KernelEvents::REQUEST => [['onKernelRequest', 20]],
-        ];
-    }
+
 }
