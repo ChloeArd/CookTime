@@ -43,15 +43,19 @@ class ArticleCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if (!$entityInstance instanceof Article) return;
+        if (!$entityInstance instanceof Article) {
+            return;
+        }
         date_default_timezone_set('Europe/Paris');
         $entityInstance->setDate(new \DateTime());
         parent::persistEntity($entityManager, $entityInstance);
     }
 
-    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void {
-
-        if (!$entityInstance instanceof Article) return;
+    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if (!$entityInstance instanceof Article) {
+            return;
+        }
         foreach ($entityInstance->getComments() as $comment) {
             $entityManager->remove($comment);
         }

@@ -278,6 +278,16 @@ button:hover, .btn:hover {
     padding: 8px;
 }
 
+.align {
+    display: flex;
+    align-items: center;
+}
+
+.w-initial {
+    width: initial;
+    margin-left: 8px;
+}
+
 .flag {
     width: 30px;
 }

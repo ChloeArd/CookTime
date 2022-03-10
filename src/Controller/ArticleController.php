@@ -90,17 +90,25 @@ class ArticleController extends AbstractController
      * @return Response
      */
     #[Route('/article/update/{id}', name: 'article_update')]
+    #[IsGranted('ROLE_AUTHOR')]
     public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
+        $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-            $message = $translator->trans('Article modified successfully');
-            $this->addFlash("success", $message);
-            $id = $article->getId();
-            return $this->redirect("/article/$id");
+        if ($idUser == $article->getUser()->getId()) {
+            $form = $this->createForm(ArticleType::class, $article);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager->flush();
+                $message = $translator->trans('Article modified successfully');
+                $this->addFlash("success", $message);
+                $id = $article->getId();
+                return $this->redirect("/article/$id");
+            }
+        }
+        else {
+            return $this->redirectToRoute("home");
         }
         return $this->render('article/update.html.twig', ['form' => $form->createView()]);
     }
@@ -116,11 +124,18 @@ class ArticleController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     #[Route('/article/delete/{id}', name: 'article_delete')]
+    #[IsGranted('ROLE_AUTHOR')]
     public function delete(Article $article, ArticleRepository $repository, TranslatorInterface $translator): Response
     {
-        $repository->remove($article);
-        $message = $translator->trans('Article deleted successfully');
-        $this->addFlash("success", $message);
+        $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
+
+        if ($idUser == $article->getUser()->getId()) {
+            $repository->remove($article);
+            $message = $translator->trans('Article deleted successfully');
+            $this->addFlash("success", $message);
+            return $this->redirectToRoute("home");
+        }
+
         return $this->redirectToRoute("home");
     }
 }

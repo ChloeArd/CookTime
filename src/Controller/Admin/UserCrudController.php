@@ -28,5 +28,4 @@ class UserCrudController extends AbstractCrudController
             BooleanField::new('is_verified')
         ];
     }
-
 }

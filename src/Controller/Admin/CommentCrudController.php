@@ -30,7 +30,9 @@ class CommentCrudController extends AbstractCrudController
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if (!$entityInstance instanceof Comment) return;
+        if (!$entityInstance instanceof Comment) {
+            return;
+        }
         date_default_timezone_set('Europe/Paris');
         $entityInstance->setDate(new \DateTime());
         parent::persistEntity($entityManager, $entityInstance);

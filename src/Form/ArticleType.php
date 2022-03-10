@@ -52,7 +52,7 @@ class ArticleType extends AbstractType
             ])
             ->add('date', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->add('user', EntityType::class, ['class' => User::class, "choice_label" => "id"])
-            ->add('submit', SubmitType::class, ["label" => "Save"] )
+            ->add('submit', SubmitType::class, ["label" => "Save"])
         ;
     }
 

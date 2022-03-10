@@ -8,11 +8,13 @@
     <main>
         <h1 class="center title">{{ article.title |title }}</h1>
 
-        {% if app.user.id == article.user.id %}
-            <div class="flexCenter m-2">
-                <a class="btnHover" href="/article/update/{{ article.id }}"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a class="btnHover" href="/article/delete/{{ article.id }}"><i class="fa-solid fa-trash"></i></a>
-            </div>
+        {% if app.user %}
+            {% if app.user.id == article.user.id %}
+                <div class="flexCenter m-2">
+                    <a class="btnHover" href="/article/update/{{ article.id }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="btnHover" href="/article/delete/{{ article.id }}"><i class="fa-solid fa-trash"></i></a>
+                </div>
+            {% endif %}
         {% endif %}
 
         <div class="flexCenter">
