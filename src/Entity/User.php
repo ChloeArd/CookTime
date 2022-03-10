@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -21,12 +22,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank(message: "Email cannot be empty")]
+    #[Assert\Email(message: "The email is not in the correct format", mode: 'html5')]
     private $email;
 
     #[ORM\Column(type: 'json')]
+    #[Assert\NotBlank(message: "Roles cannot be empty")]
+    #[Assert\Json(message: "The JSON is not in the correct format")]
     private $roles = ["ROLE_USER"];
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Password cannot be empty")]
+    #[Assert\NotCompromisedPassword(message: "The password entered is compromised, please enter another one")]
     private $password;
 
     #[ORM\Column(type: 'boolean')]

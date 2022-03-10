@@ -28,7 +28,7 @@ class CommentController extends AbstractController
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    #[Route('/comment/add/{id}', name: 'comment_add')]
+    #[Route('/comment/add/{id<\d+>}', name: 'comment_add')]
     public function add(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UserRepository $repository): Response
     {
         $comment = new Comment();
@@ -68,7 +68,7 @@ class CommentController extends AbstractController
      * @param TranslatorInterface $translator
      * @return Response
      */
-    #[Route('/comment/update/{id}', name: 'comment_update')]
+    #[Route('/comment/update/{id<\d+>}', name: 'comment_update')]
     #[isGranted('ROLE_MODERATOR')]
     public function update(Comment $comment, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
@@ -95,7 +95,7 @@ class CommentController extends AbstractController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    #[Route('/comment/delete/{id}', name: 'comment_delete')]
+    #[Route('/comment/delete/{id<\d+>}', name: 'comment_delete')]
     #[isGranted('ROLE_MODERATOR')]
     public function delete(Comment $comment, CommentRepository $repository, TranslatorInterface $translator): Response
     {

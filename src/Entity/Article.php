@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -16,24 +17,32 @@ class Article
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Title cannot be empty")]
     private $title;
 
     #[ORM\Column(type: 'text', nullable: true)]
+    #[Assert\Url(message: "The URL is not in the correct format", protocols: ['https', 'sftp'])]
     private $picture;
 
     #[ORM\Column(type: 'time')]
+    #[Assert\NotBlank(message: "Time cannot be empty")]
     private $time;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Level cannot be empty")]
     private $level;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: "Preparation cannot be empty")]
+    #[Assert\Length(min: 40, minMessage: 'The preparation is too short')]
     private $preparation;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\NotBlank(message: "Date cannot be empty")]
     private $date;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'articles')]
+    #[Assert\NotBlank(message: "User cannot be empty")]
     private $user;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]

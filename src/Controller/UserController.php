@@ -36,7 +36,7 @@ class UserController extends AbstractController
      * @param TranslatorInterface $translator
      * @return Response
      */
-    #[Route('/user/update/{id}', name: 'user_update')]
+    #[Route('/user/update/{id<\d+>}', name: 'user_update')]
     public function update(User $user, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -60,7 +60,7 @@ class UserController extends AbstractController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    #[Route('/user/delete/{id}', name: 'user_delete')]
+    #[Route('/user/delete/{id<\d+>}', name: 'user_delete')]
     public function delete(User $user, UserRepository $repository, TranslatorInterface $translator): Response
     {
         $repository->remove($user);

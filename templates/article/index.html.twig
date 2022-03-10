@@ -8,16 +8,11 @@
     <main>
         <h1 class="center title">{% trans %}The recipes{% endtrans %}</h1>
 
-        {% if app.user %}
-            {% for role in app.user.roles %}
-                {% if role == "ROLE_AUTHOR" %}
-                    <div class="m-2">
-                        <a class="btn" href="{{ path("article_add")}}">{% trans %}Add article{% endtrans %}</a>
-                    </div>
-                {% endif %}
-            {% endfor %}
+        {% if is_granted('ROLE_AUTHOR') %}
+            <div class="m-2">
+                <a class="btn" href="{{ path("article_add")}}">{% trans %}Add article{% endtrans %}</a>
+            </div>
         {% endif %}
-
 
         {% for article in articles %}
         <div class="articles flexRow">

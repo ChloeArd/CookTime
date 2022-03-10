@@ -26,7 +26,11 @@ class ArticleType extends AbstractType
         $dateTime = new \DateTime();
         $builder
             ->add('title', TextType::class, ['label' => 'Title of article'])
-            ->add('picture', UrlType::class, ['label' => 'URL to photo of the dish'])
+            ->add('picture', UrlType::class, [
+                'label' => 'URL to photo of the dish',
+                'help' => 'A valid URL always starts with https://',
+                'default_protocol' => "https://"
+            ])
             ->add('time', TimeType::class, [
                 'label' => 'Preparation + cooking time',
                 'widget' => 'single_text',
@@ -41,16 +45,12 @@ class ArticleType extends AbstractType
                     'Très difficile' => "Très difficile",
                 ],
                 ])
-            ->add('preparation', CKEditorType::class, [
-                'label' => 'Preparing the recipe',
-                'constraints' => [
-                    new Length([
-                        'min' => 40,
-                        'minMessage' => 'The preparation is too short',
-                    ])
-                ]
+            ->add('preparation', CKEditorType::class, ['label' => 'Preparing the recipe'])
+            ->add('date', DateTimeType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+                'with_seconds' => false
             ])
-            ->add('date', DateTimeType::class, ['widget' => 'single_text', 'required' => false])
             ->add('user', EntityType::class, ['class' => User::class, "choice_label" => "id"])
             ->add('submit', SubmitType::class, ["label" => "Save"])
         ;

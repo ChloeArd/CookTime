@@ -72,7 +72,7 @@ class ArticleController extends AbstractController
      * @param ArticleRepository $repository
      * @return Response
      */
-    #[Route('/article/{idArticle}', name: 'article_one')]
+    #[Route('/article/{idArticle<\d+>}', name: 'article_one')]
     public function oneArticle(int $idArticle, ArticleRepository $repository, CommentRepository $commentRepository): Response
     {
         $article = $repository->find($idArticle);
@@ -88,7 +88,7 @@ class ArticleController extends AbstractController
      * @param TranslatorInterface $translator
      * @return Response
      */
-    #[Route('/article/update/{id}', name: 'article_update')]
+    #[Route('/article/update/{id<\d+>}', name: 'article_update')]
     #[IsGranted('ROLE_AUTHOR')]
     public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
@@ -122,7 +122,7 @@ class ArticleController extends AbstractController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    #[Route('/article/delete/{id}', name: 'article_delete')]
+    #[Route('/article/delete/{id<\d+>}', name: 'article_delete')]
     #[IsGranted('ROLE_AUTHOR')]
     public function delete(Article $article, ArticleRepository $repository, TranslatorInterface $translator): Response
     {
