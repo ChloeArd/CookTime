@@ -28,7 +28,7 @@ class CommentController extends AbstractController
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    #[Route('/comment/add/{id}', name: 'app_comment')]
+    #[Route('/comment/add/{id}', name: 'comment_add')]
     public function add(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UserRepository $repository): Response
     {
         $comment = new Comment();

@@ -12,13 +12,13 @@
                 <p><span class="c-grey">Email</span> : {{ app.user.email }}</p>
             </div>
             <div class="m-2 flexCenter">
-                <a class="btn" href="/user/update/{{ app.user.id }}">{% trans %}Update my account{% endtrans %}</a>
+                <a class="btn" href="{{ path("user_update", {id: app.user.id })}}">{% trans %}Update my account{% endtrans %}</a>
             </div>
             <div class="m-2 flexCenter">
-                <a class="btn" href="/reset-password">{% trans %}Reset my password{% endtrans %}</a>
+                <a class="btn" href="{{ path("reset_pwdapp_forgot_password_request")}}">{% trans %}Reset my password{% endtrans %}</a>
             </div>
             <div class="m-2 flexCenter">
-                <a class="btn" href="/user/delete/{{ app.user.id }}">{% trans %}Delete my account{% endtrans %}</a>
+                <a class="btn" href="{{ path("user_delete", {id: app.user.id })}}">{% trans %}Delete my account{% endtrans %}</a>
             </div>
 
             <div>

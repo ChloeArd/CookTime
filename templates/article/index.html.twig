@@ -12,7 +12,7 @@
             {% for role in app.user.roles %}
                 {% if role == "ROLE_AUTHOR" %}
                     <div class="m-2">
-                        <a class="btn" href="/article/add">{% trans %}Add article{% endtrans %}</a>
+                        <a class="btn" href="{{ path("article_add")}}">{% trans %}Add article{% endtrans %}</a>
                     </div>
                 {% endif %}
             {% endfor %}
@@ -25,7 +25,7 @@
                 <img class="imageArticles" src="{{ article.picture }}">
             </div>
             <div class="flexColumn w-8 width_repsonsive">
-                <a class="titleArticle" href="article/{{ article.id }}"><h2>{{ article.title |title }} <span class="c-grey date">- {{ article.date |date("d/m/Y H:i") }}<span></span></h2></a>
+                <a class="titleArticle" href="{{ path("article_one", {idArticle: article.id })}}"><h2>{{ article.title |title }} <span class="c-grey date">- {{ article.date |date("d/m/Y H:i") }}</span></h2></a>
                 <p><span class="c-grey">{% trans %}Time{% endtrans %} :</span> {{ article.time |date("H:i")}}</p>
                 <p><span class="c-grey">{% trans %}Level{% endtrans %} :</span> {{ article.level }}</p>
             </div>
