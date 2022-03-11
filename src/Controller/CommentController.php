@@ -28,7 +28,7 @@ class CommentController extends AbstractController
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    #[Route('/comment/add/{id<\d+>}', name: 'comment_add')]
+    #[Route('/comment/add/{slug}', name: 'comment_add')]
     public function add(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator, UserRepository $repository): Response
     {
         $comment = new Comment();
@@ -53,8 +53,8 @@ class CommentController extends AbstractController
 
                 $message = $translator->trans('Comment added successfully');
                 $this->addFlash("success", $message);
-                $id = $article->getId();
-                return $this->redirect("/article/$id");
+                $slug = $article->getSlug();
+                return $this->redirect("/article/$slug");
             }
         }
         return $this->render('comment/add.html.twig', ['form' => $form->createView()]);
@@ -69,7 +69,6 @@ class CommentController extends AbstractController
      * @return Response
      */
     #[Route('/comment/update/{id<\d+>}', name: 'comment_update')]
-    #[isGranted('ROLE_MODERATOR')]
     public function update(Comment $comment, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
         $form = $this->createForm(CommentType::class, $comment);
@@ -80,8 +79,8 @@ class CommentController extends AbstractController
 
             $message = $translator->trans('Comment modified successfully');
             $this->addFlash("success", $message);
-            $id = $comment->getArticle()->getId();
-            return $this->redirect("/article/$id");
+            $slug = $comment->getArticle()->getSlug();
+            return $this->redirect("/article/$slug");
         }
         return $this->render('comment/update.html.twig', ['form' => $form->createView()]);
     }
@@ -96,13 +95,12 @@ class CommentController extends AbstractController
      * @throws \Doctrine\ORM\OptimisticLockException
      */
     #[Route('/comment/delete/{id<\d+>}', name: 'comment_delete')]
-    #[isGranted('ROLE_MODERATOR')]
     public function delete(Comment $comment, CommentRepository $repository, TranslatorInterface $translator): Response
     {
         $repository->remove($comment);
         $message = $translator->trans('Comment deleted successfully');
         $this->addFlash("success", $message);
-        $id = $comment->getArticle()->getId();
-        return $this->redirect("/article/$id");
+        $slug = $comment->getArticle()->getSlug();
+        return $this->redirect("/article/$slug");
     }
 }

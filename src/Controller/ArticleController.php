@@ -72,10 +72,9 @@ class ArticleController extends AbstractController
      * @param ArticleRepository $repository
      * @return Response
      */
-    #[Route('/article/{idArticle<\d+>}', name: 'article_one')]
-    public function oneArticle(int $idArticle, ArticleRepository $repository, CommentRepository $commentRepository): Response
+    #[Route('/article/{slug}', name: 'article_one')]
+    public function oneArticle(Article $article, ArticleRepository $repository, CommentRepository $commentRepository): Response
     {
-        $article = $repository->find($idArticle);
         $comments = $commentRepository->findBy(['article' => $article->getId()]);
         return $this->render('article/one.html.twig', ["article" => $article, "comments" => $comments]);
     }
@@ -88,7 +87,7 @@ class ArticleController extends AbstractController
      * @param TranslatorInterface $translator
      * @return Response
      */
-    #[Route('/article/update/{id<\d+>}', name: 'article_update')]
+    #[Route('/article/{slug}/update', name: 'article_update')]
     #[IsGranted('ROLE_AUTHOR')]
     public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
@@ -102,8 +101,8 @@ class ArticleController extends AbstractController
                 $entityManager->flush();
                 $message = $translator->trans('Article modified successfully');
                 $this->addFlash("success", $message);
-                $id = $article->getId();
-                return $this->redirect("/article/$id");
+                $slug = $article->getSlug();
+                return $this->redirect("/article/$slug");
             }
         }
         else {
@@ -122,7 +121,7 @@ class ArticleController extends AbstractController
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    #[Route('/article/delete/{id<\d+>}', name: 'article_delete')]
+    #[Route('/article/{slug}/delete', name: 'article_delete')]
     #[IsGranted('ROLE_AUTHOR')]
     public function delete(Article $article, ArticleRepository $repository, TranslatorInterface $translator): Response
     {
