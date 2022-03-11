@@ -25,7 +25,7 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(ArticleRepository $repository): Response
     {
-        $articles = $repository->findAll();
+        $articles = $repository->findBy(['isVerified' => true]);
         return $this->render('article/index.html.twig', ["articles" => $articles]);
     }
 

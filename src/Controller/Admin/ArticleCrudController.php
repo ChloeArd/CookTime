@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -26,6 +27,7 @@ class ArticleCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
+            TextField::new('slug'),
             UrlField::new('picture'),
             TimeField::new('time'),
             ChoiceField::new('level')->setChoices([
@@ -37,7 +39,8 @@ class ArticleCrudController extends AbstractCrudController
             ]),
             TextareaField::new('preparation'),
             DateTimeField::new('date')->hideOnForm(),
-            AssociationField::new('user')
+            AssociationField::new('user'),
+            BooleanField::new('is_verified')
         ];
     }
 
