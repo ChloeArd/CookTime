@@ -17,7 +17,11 @@
         {% for article in articles %}
         <div class="articles flexRow">
             <div class="w-2 flexCenter width_repsonsive">
-                <img class="imageArticles" src="{{ article.picture }}">
+                {% if article.picture  %}
+                <img class="imageArticles" src="{{ asset('/img/recipes/' ~ article.picture) }}">
+                {% else %}
+                    <img class="imageArticles" src="https://via.placeholder.com/200x100">
+                {% endif %}
             </div>
             <div class="flexColumn w-8 width_repsonsive">
                 <a class="titleArticle" href="{{ path("article_one", {slug: article.slug })}}"><h2>{{ article.title |title }} <span class="c-grey date">- {{ article.date |date("d/m/Y H:i") }}</span></h2></a>

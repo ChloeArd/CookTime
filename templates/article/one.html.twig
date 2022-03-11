@@ -18,7 +18,11 @@
         {% endif %}
 
         <div class="flexCenter">
-            <img class="imageArticle" src="{{ article.picture }}">
+            {% if article.picture  %}
+                <img class="imageArticles" src="{{ asset('/img/recipes/' ~ article.picture) }}">
+            {% else %}
+                <img class="imageArticles" src="https://via.placeholder.com/600x600">
+            {% endif %}
         </div>
 
         <div class="flexRow flexCenter">

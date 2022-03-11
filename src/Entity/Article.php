@@ -28,7 +28,6 @@ class Article
     private $slug;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    #[Assert\Url(message: "The URL is not in the correct format")]
     private $picture;
 
     #[ORM\Column(type: 'time')]

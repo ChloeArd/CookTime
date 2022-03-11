@@ -57,7 +57,22 @@ class ArticleController extends AbstractController
                 $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
                 $userAuthenticated = $repository->find($idUser);
                 $article->setUser($userAuthenticated);
+
+                if (!$form->get('picture')->isEmpty()) {
+                    //upload a picture
+                    $filePicture = $form->get('picture')->getData();
+                    $filename = uniqid() . "." . $filePicture->guessExtension();
+
+                    $filePicture->move(
+                        $this->getParameter('picture_directory'),
+                        $filename
+                    );
+
+                    $article->setPicture($filename);
+                }
+
                 $entityManager->flush();
+
                 $message = $translator->trans('Article added successfully');
                 $this->addFlash("success", $message);
                 return $this->redirectToRoute("home");
@@ -91,6 +106,9 @@ class ArticleController extends AbstractController
     #[IsGranted('ROLE_AUTHOR')]
     public function update(Article $article, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+
+        $originalFilename = $article->getPicture();
+
         $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
 
         if ($idUser == $article->getUser()->getId()) {
@@ -98,6 +116,27 @@ class ArticleController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+
+                if (!$form->get('picture')->isEmpty()) {
+
+                    if ($originalFilename !== null) {
+                        //delete a original picture
+                        unlink($this->getParameter('picture_directory') . "/" . $originalFilename);
+                    }
+
+                    //upload a new picture
+                    $filePicture = $form->get('picture')->getData();
+                    $filename = uniqid() . "." . $filePicture->guessExtension();
+
+                    $filePicture->move(
+                        $this->getParameter('picture_directory'),
+                        $filename
+                    );
+
+                    $article->setPicture($filename);
+                }
+
+
                 $entityManager->flush();
                 $message = $translator->trans('Article modified successfully');
                 $this->addFlash("success", $message);
@@ -128,6 +167,11 @@ class ArticleController extends AbstractController
         $idUser = $this->container->get('security.token_storage')->getToken()->getUser()->getId();
 
         if ($idUser == $article->getUser()->getId()) {
+            //delete a picture
+            $filePicture = $article->getPicture();
+
+            unlink($this->getParameter('picture_directory') . "/" . $filePicture);
+
             $repository->remove($article);
             $message = $translator->trans('Article deleted successfully');
             $this->addFlash("success", $message);

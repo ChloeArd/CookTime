@@ -28,10 +28,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'json')]
     #[Assert\Json(message: "The JSON is not in the correct format")]
-    private $roles = ["ROLE_USER"];
+    private $roles = [];
 
     #[ORM\Column(type: 'string')]
-    #[Assert\NotBlank(message: "Password cannot be empty")]
     #[Assert\NotCompromisedPassword(message: "The password entered is compromised, please enter another one")]
     private $password;
 
@@ -165,7 +164,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Comment>
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
         return $this->comments;
     }
