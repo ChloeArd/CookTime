@@ -10,7 +10,8 @@
 
         <div class="container-fluid mt-4 w-50">
             {{ form_start(form, { 'attr': {'class': 'flexColumn'}}) }}
-                {{ form_row(form.email) }}
+            {{ form_row(form.avatar) }}
+            {{ form_row(form.email) }}
             <div class="d-none">
                 {{ form_row(form.password) }}
                 {{ form_row(form.roles) }}

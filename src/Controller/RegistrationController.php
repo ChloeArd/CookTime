@@ -44,6 +44,25 @@ class RegistrationController extends AbstractController
             );
 
             $entityManager->persist($user);
+
+            if (!$form->get('avatar')->isEmpty()) {
+                //upload a picture
+                $filePicture = $form->get('avatar')->getData();
+                $filename = uniqid() . "." . $filePicture->guessExtension();
+
+                $filePicture->move(
+                    $this->getParameter('avatar_directory'),
+                    $filename
+                );
+
+                $user->setAvatar($filename);
+            }
+            else {
+                $rand = rand(1, 4);
+                $filename = $rand . ".png";
+                $user->setAvatar($filename);
+            }
+
             $entityManager->flush();
 
             // generate a signed url and email it to the user

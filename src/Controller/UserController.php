@@ -39,10 +39,32 @@ class UserController extends AbstractController
     #[Route('/user/update/{id<\d+>}', name: 'user_update')]
     public function update(User $user, Request $request, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        $originalFilename = $user->getAvatar();
+
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if (!$form->get('avatar')->isEmpty()) {
+
+                if ($originalFilename !== null) {
+                    //delete a original picture
+                    unlink($this->getParameter('avatar_directory') . "/" . $originalFilename);
+                }
+
+                //upload a new picture
+                $filePicture = $form->get('avatar')->getData();
+                $filename = uniqid() . "." . $filePicture->guessExtension();
+
+                $filePicture->move(
+                    $this->getParameter('avatar_directory'),
+                    $filename
+                );
+
+                $user->setAvatar($filename);
+            }
+
             $entityManager->flush();
             $message = $translator->trans('Your account modified successfully');
             $this->addFlash("success", $message);
@@ -63,6 +85,13 @@ class UserController extends AbstractController
     #[Route('/user/delete/{id<\d+>}', name: 'user_delete')]
     public function delete(User $user, UserRepository $repository, TranslatorInterface $translator): Response
     {
+        //delete a picture
+        $filePicture = $user->getAvatar();
+
+        if ($this->getParameter('avatar_directory') . "/" . $filePicture) {
+            unlink($this->getParameter('avatar_directory') . "/" . $filePicture);
+        }
+
         $repository->remove($user);
         $message = $translator->trans('User deleted successfully');
         $this->addFlash("success", $message);

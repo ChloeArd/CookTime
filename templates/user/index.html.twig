@@ -8,6 +8,13 @@
         <h1 class="center title">{% trans %}Hello {% endtrans %} !</h1>
 
         <div class="comment">
+            <div class="flexCenter m-2">
+                {% if app.user.avatar  %}
+                    <img class="avatar" src="{{ asset('/img/avatar/' ~ app.user.avatar) }}">
+                    <img class="avatar" src="{{ asset('/img/default/' ~ app.user.avatar) }}">
+                {% else %}
+                {% endif %}
+            </div>
             <div class="info">
                 <p><span class="c-grey">Email</span> : {{ app.user.email }}</p>
             </div>

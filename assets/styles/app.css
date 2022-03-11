@@ -182,6 +182,10 @@ button:hover, .btn:hover {
     width: 90%;
 }
 
+.avatar {
+    border-radius: 50%;
+    width: 20%;
+}
 
 .articles:hover {
     background-color: rgba(225, 145, 89, 0.67);

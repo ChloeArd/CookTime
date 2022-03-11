@@ -26,9 +26,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(message: "The email is not in the correct format", mode: 'html5')]
     private $email;
 
+    #[ORM\Column(type: 'string', length: 180, nullable: true)]
+    private $avatar;
+
     #[ORM\Column(type: 'json')]
-    #[Assert\Json(message: "The JSON is not in the correct format")]
-    private $roles = [];
+    private $roles = ["ROLE_USER"];
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotCompromisedPassword(message: "The password entered is compromised, please enter another one")]
@@ -64,6 +66,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
     }
 
     /**
