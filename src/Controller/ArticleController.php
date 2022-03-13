@@ -136,7 +136,6 @@ class ArticleController extends AbstractController
                     $article->setPicture($filename);
                 }
 
-
                 $entityManager->flush();
                 $message = $translator->trans('Article modified successfully');
                 $this->addFlash("success", $message);

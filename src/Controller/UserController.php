@@ -47,8 +47,7 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             if (!$form->get('avatar')->isEmpty()) {
-
-                if ($originalFilename !== null) {
+                if (file_exists("../public/img/avatar/$originalFilename")) {
                     //delete a original picture
                     unlink($this->getParameter('avatar_directory') . "/" . $originalFilename);
                 }
@@ -66,6 +65,7 @@ class UserController extends AbstractController
             }
 
             $entityManager->flush();
+
             $message = $translator->trans('Your account modified successfully');
             $this->addFlash("success", $message);
             return $this->redirectToRoute("account");
@@ -85,11 +85,15 @@ class UserController extends AbstractController
     #[Route('/user/delete/{id<\d+>}', name: 'user_delete')]
     public function delete(User $user, UserRepository $repository, TranslatorInterface $translator): Response
     {
+        $originalFilename = $user->getAvatar();
+
         //delete a picture
         $filePicture = $user->getAvatar();
 
-        if ($this->getParameter('avatar_directory') . "/" . $filePicture) {
-            unlink($this->getParameter('avatar_directory') . "/" . $filePicture);
+        if (file_exists("../public/img/avatar/$originalFilename")) {
+            if ($this->getParameter('avatar_directory') . "/" . $filePicture) {
+                unlink($this->getParameter('avatar_directory') . "/" . $filePicture);
+            }
         }
 
         $repository->remove($user);

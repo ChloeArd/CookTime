@@ -9,13 +9,10 @@
 
         <div class="comment">
             <div class="flexCenter m-2">
-                {% if app.user.avatar  %}
-                    {% if file_exist('../public/img/avatar/' ~ app.user.avatar) %}
-                        <img class="avatar" src="{{ asset('/img/avatar/' ~ app.user.avatar) }}" alt="{{ app.user.avatar }}">
-                    {% elseif file_exist('../public/img/default/' ~ app.user.avatar) %}
-                        <img class="avatar" src="{{ asset('/img/default/' ~ app.user.avatar) }}" alt="{{ app.user.avatar }}">
-                    {% endif %}
-                {% else %}
+                {% if file_exist('../public/img/avatar/' ~ app.user.avatar) %}
+                    <img class="avatar" src="{{ asset('/img/avatar/' ~ app.user.avatar) }}" alt="{{ app.user.avatar }}">
+                {% elseif file_exist('../public/img/default/' ~ app.user.avatar) %}
+                    <img class="avatar" src="{{ asset('/img/default/' ~ app.user.avatar) }}" alt="{{ app.user.avatar }}">
                 {% endif %}
             </div>
             <div class="info">
